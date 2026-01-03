@@ -25,12 +25,10 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import taboolib.common.platform.ProxyParticle
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.platform.sendTo
-import taboolib.common.util.Location
 import taboolib.common5.cbool
 import taboolib.common5.cdouble
+import taboolib.library.xseries.ProxyParticle
 import taboolib.library.xseries.XSound
 
 @AutoRegister
@@ -95,7 +93,7 @@ internal object AttackDistanceRealizer : BaseRealizer("attack-distance"), Switch
         if (isDistanceSound) XSound.ENTITY_PLAYER_ATTACK_SWEEP.play(entity, 1.0f, 1.0f)
         if (isDistanceEffect) {
             val location = entity.eyeLocation
-            ProxyParticle.SWEEP_ATTACK.sendTo(Location(player.world.name, location.x, location.y, location.z))
+            player.world.spawnParticle(ProxyParticle.SWEEP_ATTACK.get(),location,1)
         }
         debug("Distance Attack!")
         entity.damage(attackDamage.coerceAtLeast(1.0) * force, player)
